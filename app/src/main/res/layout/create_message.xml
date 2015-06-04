@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff9f8fa" >
+
+    <EditText
+        android:id="@+id/etxt_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Write your messsage here"
+        android:singleLine="true"
+        android:textColorHint="#ff8b8889"
+        android:textColor="#f000"
+        android:inputType="textCapSentences"/>
+
+    <EditText
+        android:id="@+id/etxt_timestamp"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/etxt_message"
+        android:nextFocusDown="@+id/etxt_lat"
+        android:singleLine="true"
+        android:textColorHint="#00000000"
+        android:textColor="#00000000"/>
+
+    <EditText
+        android:id="@+id/etxt_lat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/etxt_timestamp"
+        android:nextFocusDown="@+id/etxt_lng"
+        android:background="@null"
+        android:singleLine="true"
+        android:textColorHint="#00000000"
+        android:textColor="#00000000"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/etxt_lng"
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_below="@+id/etxt_lat"
+        android:singleLine="true"
+        android:textColorHint="#00000000"
+        android:textColor="#00000000"
+        android:inputType="numberDecimal" />
+
+
+
+    <LinearLayout
+        android:id="@+id/layout_submit"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etxt_lng"
+        android:layout_margin="5dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ff840fa8"
+            android:textColor="#fff"
+            android:text="Submit"
+            android:hint="Submit" />
+
+        <Button
+            android:id="@+id/button_reset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#ff840fa8"
+            android:textColor="#fff"
+            android:text="Reset"
+            android:hint="reset" />
+
+
+    </LinearLayout>
+</RelativeLayout>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff9f8fa" >
+
+    <LinearLayout
+        android:id="@+id/createMessageTab"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:text="Create Message"
+        android:nestedScrollingEnabled="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/createEditText"
+                    android:hint="@string/write_your_message_here"
+                    android:textColorHint="#f000"
+                    android:textColor="#f000"
+                    android:password="false" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="241dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="date"
+                        android:ems="10"
+                        android:id="@+id/dateEditText"
+                        android:hint="date" />
+
+                    <EditText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="10"
+                        android:id="@+id/numberEditText"
+                        android:layout_gravity="center_vertical"
+                        android:hint="number" />
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/submit"
+                        android:id="@+id/submitMessageButton"
+                        android:layout_gravity="bottom"
+                        android:background="#ff840fa8"/>
+
+                     android:onClick="onClick_AddTask"/-->
+
+              <!--  </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
+    -->

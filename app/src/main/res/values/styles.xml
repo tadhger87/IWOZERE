@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Base application theme.-->
+    <style name="AppBaseTheme" parent="android:style/Theme.Holo.Light">
+
+        
+        <item name="android:windowNoTitle">true</item>
+
+
+    </style>
+
+
+
+        <style name="Widget.ActionBar" parent="android:style/Theme.Holo.Light">
+
+        </style>
+
+        <style name="Widget.ActionBar.Logo">
+            <item name="android:logo">@drawable/ic_launcher</item>
+        </style>
+
+
+
+
+</resources>
+
+
