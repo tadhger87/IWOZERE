@@ -64,11 +64,11 @@
     <string name="search_distance">search_distance</string>
     <string name="logout_full">logout_full</string>
     <string name="signup">signup</string>
-    <string name="settings_distance_format" />
+    <string name="settings_distance_format"></string>
     <string name="Logout">Logout</string>
     <string name="baloonText">Here is some text for the baloon boom boom boom</string>
     <string name="search_the_map">Search the map</string>
     <string name="search">Search</string>
-
+    <string name="title_activity_test_app_bar">TestAppBar</string>
 
 </resources>

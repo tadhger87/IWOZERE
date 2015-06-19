@@ -19,6 +19,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -39,8 +40,9 @@ import com.example.tadhg.iwozere.login.SettingsActivity;
 import com.example.tadhg.iwozere.models.Message;
 import com.example.tadhg.iwozere.database.MessageDAO;
 import com.example.tadhg.iwozere.R;
-import com.example.tadhg.iwozere.ui.BaloonAdapter;
+
 import com.example.tadhg.iwozere.ui.Tabs;
+
 import com.example.tadhg.iwozere.ui.TestTabs;
 import com.example.tadhg.iwozere.database.LatLngItem;
 
@@ -113,6 +115,8 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
     private static final LatLng BECKETT = new LatLng(53.346969, -6.241408);
     private static final LatLng SCIENCE = new LatLng(53.344343, -6.250313);
 
+    Toolbar toolbar;
+
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
@@ -150,9 +154,11 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main);
 
-        android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+      /* android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
-        getSupportActionBar().setIcon(R.drawable.ic_launcher);
+        getSupportActionBar().setIcon(R.drawable.ic_launcher);*/
 
         userIcon = drawable.purple_point;
         foodIcon = drawable.red_point;
@@ -295,7 +301,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
                     ));
 
-            allMarkersMap.put(messageMarker, TestTabs.class);
+            allMarkersMap.put(messageMarker, TestAppBar.class);
 
 
         }
