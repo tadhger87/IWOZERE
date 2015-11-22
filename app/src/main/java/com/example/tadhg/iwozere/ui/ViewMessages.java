@@ -1,19 +1,17 @@
 package com.example.tadhg.iwozere.ui;
 
 /**
- *MessageListFragment.java
- *Rev 1
- *Date e.g. 01/04/2015
- *@reference http://androidopentutorials.com/android-sqlite-example/EmpListFragment.java
- *@author Tadhg Ó Cuirrn, x14109824
+ * Created by Tadhg on 06/06/2015.
  */
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,25 +19,30 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.tadhg.iwozere.adapters.MessageListAdapter;
 import com.example.tadhg.iwozere.R;
+import com.example.tadhg.iwozere.adapters.NewMessageAdapter;
 import com.example.tadhg.iwozere.database.MessageDAO;
 import com.example.tadhg.iwozere.models.Message;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MessageListFragment extends Fragment{      //implements OnItemClickListener, OnItemLongClickListener
+/**
+ * Created by hp1 on 21-01-2015.
+ */
 
-
-    public static final String ARG_ITEM_ID = "employee_list";
+public class ViewMessages extends Fragment {
 
     Activity activity;
+    private List<Message> myMessage;
+    private GetMessageTask task;
     ListView messageListView;
+    RecyclerView recView;
     ArrayList<Message> messages;
 
-    MessageListAdapter messageListAdapter;
+    NewMessageAdapter messageListAdapter;
     MessageDAO messageDAO;
-
-    private GetMessageTask task;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,27 +51,29 @@ public class MessageListFragment extends Fragment{      //implements OnItemClick
         messageDAO = new MessageDAO(activity);
 
 
-    }
 
+
+
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.message_list_fragment, parent,
-                false);
-        findViewsById(view);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        View v =inflater.inflate(R.layout.view_messages,container,false);
+        recView = (RecyclerView)v.findViewById(R.id.cardList);
+        recView.setHasFixedSize(true);
+
+        recView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recView.setItemAnimator(new DefaultItemAnimator());
+
+        NewMessageAdapter adapter = new NewMessageAdapter(activity, myMessage);
+        recView.setAdapter(adapter);
 
         task = new GetMessageTask(activity);
         task.execute((Void) null);
-
-
-        return view;
+//        Collections.sort(messages);
+        return v;
     }
-
-    private void findViewsById(View view) {
-        messageListView = (ListView) view.findViewById(R.id.list_message);
-    }
-
-
 
 
     public class GetMessageTask extends AsyncTask<Void, Void, ArrayList<Message>> {
@@ -86,6 +91,7 @@ public class MessageListFragment extends Fragment{      //implements OnItemClick
             String sLat = prefs.getString("currentlatitude", null);
             String sLng = prefs.getString("currentlongitude", null);
             ArrayList<Message> messageList = messageDAO.getMessages();
+
             return messageList;
         }
 
@@ -97,9 +103,9 @@ public class MessageListFragment extends Fragment{      //implements OnItemClick
                 messages = messageList;
                 if (messageList != null) {
                     if (messageList.size() != 0) {
-                        messageListAdapter = new MessageListAdapter(activity,
+                        messageListAdapter = new NewMessageAdapter(activity,
                                 messageList);
-                        messageListView.setAdapter(messageListAdapter);
+                        recView.setAdapter(messageListAdapter);
                     } else {
                         Toast.makeText(activity, "No Messages",
                                 Toast.LENGTH_LONG).show();
@@ -108,11 +114,5 @@ public class MessageListFragment extends Fragment{      //implements OnItemClick
 
             }
         }
-    }
-
-
-    public void updateView() {
-        task = new GetMessageTask(activity);
-        task.execute((Void) null);
     }
 }

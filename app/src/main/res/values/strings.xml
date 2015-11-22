@@ -9,9 +9,9 @@
     <string name="title_activity_location_activity">location_activity</string>
     <string name="latitude">Latitude:</string>
     <string name="unknown">unknown</string>
-    <string name="Longitude">Longitute:</string>
+    <string name="Longitude">Longitude:</string>
     <string name="unknown2">unknown</string>
-    <string name="title_activity_test">testActivity</string>
+    <string name="title_activity_test">Messages at this location</string>
     <string name="title_activity_context">ContextActivity</string>
     <string name="create_message">CreateMessage</string>
     <string name="view_messages">ViewMessages</string>
@@ -32,7 +32,7 @@
     <string name="search_settings">Search Places</string>
     <string name="title_activity_map_activity">map_activity</string>
     <string name="submit">Submit</string>
-    <string name="write_your_message_here">Write your message here...</string>
+    <string name="write_your_message_here">Write your message here…</string>
     <string name="title_activity_list_notes">ListNotesActivity</string>
     <string name="title_activity_edit_note">EditNoteActivity</string>
     <string name="Title">Title</string>
@@ -40,11 +40,9 @@
     <string name="dash">-</string>
     <string name="note">note</string>
     <string name="save">save</string>
-    <string name="cancel">cancel</string>
-    <string name="title_activity_tabs">Tabs</string>
-    <string name="title_activity_top_rated_fragment">TopRatedFragment</string>
-    <string name="title_activity_games_fragment">GamesFragment</string>
-    <string name="title_activity_movies_fragment">MoviesFragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_tabs">Create a message</string>
+
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_create_message">create_message</string>
     <string name="update_emp">update_emp</string>
@@ -70,5 +68,7 @@
     <string name="search_the_map">Search the map</string>
     <string name="search">Search</string>
     <string name="title_activity_test_app_bar">TestAppBar</string>
+    <string name="welcome_i">Welcome to IWOZERE</string>
+    <string name="welcome_messages">Use this application to leave your mark all over the world.  Click on the marker at your current location to leave a short message.  Click on any other map marker to see messages left at that location by other users.  It\'s that simple!"</string>
 
 </resources>

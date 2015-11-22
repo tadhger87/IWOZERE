@@ -8,9 +8,9 @@ import android.widget.TextView;
 import com.example.tadhg.iwozere.R;
 
 /**
- * Created by Tadhg on 17/06/2015.
+ * Created by Tadhg on 28/06/2015.
  */
-public class CardViewActivity extends Activity {
+public class LLCardViewActivity extends Activity {
 
     TextView messageContent;
     TextView timestamp;
@@ -20,9 +20,9 @@ public class CardViewActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.card_test);
-        messageContent = (TextView)findViewById(R.id.person_name);
-        timestamp = (TextView)findViewById(R.id.person_age);
+        setContentView(R.layout.ll_card_test);
+        messageContent = (TextView)findViewById(R.id.ll_message_content);
+        timestamp = (TextView)findViewById(R.id.ll_timestamp);
         personPhoto = (ImageView)findViewById(R.id.ic_launcher);
 
         messageContent.setText("Emma Wilson");

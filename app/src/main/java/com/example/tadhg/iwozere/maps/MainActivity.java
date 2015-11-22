@@ -1,11 +1,11 @@
 package com.example.tadhg.iwozere.maps;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,23 +16,18 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ActionMenuView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,34 +36,24 @@ import com.example.tadhg.iwozere.models.Message;
 import com.example.tadhg.iwozere.database.MessageDAO;
 import com.example.tadhg.iwozere.R;
 
-import com.example.tadhg.iwozere.ui.Tabs;
-
-import com.example.tadhg.iwozere.ui.TestTabs;
+import com.example.tadhg.iwozere.models.MyItem;
+import com.example.tadhg.iwozere.ui.LLTabs;
 import com.example.tadhg.iwozere.database.LatLngItem;
 
+import com.example.tadhg.iwozere.ui.Tabs;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -156,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-      /* android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
+      /*android.support.v7.app.ActionBar supportActionBar = getSupportActionBar();
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_SHOW_TITLE);
         getSupportActionBar().setIcon(R.drawable.ic_launcher);*/
 
@@ -189,6 +174,25 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
                 //ok - proceed
             }
         }
+      /*  ViewTreeObserver vto;
+        if (theMap.getViewTreeObserver().isAlive()) {
+            theMap.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    // remove the listener
+                    // ! before Jelly Bean:
+                    theMap.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                    // ! for Jelly Bean and later:
+                    //mapView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                    // set map viewport
+                    // CENTER is LatLng object with the center of the map
+                    theMap.moveCamera(CameraUpdateFactory.newLatLngZoom(CENTER, 15));
+                    // ! you can query Projection object here
+                    Point markerScreenPosition = theMap.getProjection().toScreenLocation(userMarker.getPosition());
+                    // ! example output in my test code: (356, 483)
+                    System.out.println(markerScreenPosition);
+                }
+            });*/
         theMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         //Other map types - NORMAL, TERRAIN, SATELLITE, HYBRID
 
@@ -228,6 +232,8 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
             //Executing ReverseGeocodingTask to get Address
             new ReverseGeocodingTask(getBaseContext()).execute(lat, lng);
 
+
+
             userMarker = theMap.addMarker(new MarkerOptions()
 
                     .position(newLatLng)
@@ -241,26 +247,35 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
 
             userMarker.showInfoWindow();
 
+            Projection projection = theMap.getProjection();
+
+            LatLng markerLocation = userMarker.getPosition();
+
+            Point screenPosition = projection.toScreenLocation(markerLocation);
+
+            Toast.makeText(this, "Point - " + screenPosition, Toast.LENGTH_LONG).show();
+
+
             //SOME TEST MARKERS...
             testMarker = theMap.addMarker(new MarkerOptions()
                     .position(ABBEY)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            allMarkersMap.put(testMarker, TestTabs.class);
+            allMarkersMap.put(testMarker, LLTabs.class);
 
             testMarker1 = theMap.addMarker(new MarkerOptions()
                     .position(EXCISE)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            allMarkersMap.put(testMarker1, TestTabs.class);
+            allMarkersMap.put(testMarker1, LLTabs.class);
 
             testMarker2 = theMap.addMarker(new MarkerOptions()
                     .position(BECKETT)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            allMarkersMap.put(testMarker2, TestTabs.class);
+            allMarkersMap.put(testMarker2, LLTabs.class);
 
             testMarker3 = theMap.addMarker(new MarkerOptions()
                     .position(SCIENCE)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            allMarkersMap.put(testMarker3, TestTabs.class);
+            allMarkersMap.put(testMarker3, LLTabs.class);
 
 
             SharedPreferences.Editor editor = getSharedPreferences("MyPref", 0).edit();
@@ -301,7 +316,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)
                     ));
 
-            allMarkersMap.put(messageMarker, TestAppBar.class);
+            allMarkersMap.put(messageMarker, LLTabs.class);
 
 
         }
@@ -330,8 +345,16 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
             }
         });
 
+      /*  Projection projection = theMap.getProjection();
 
+        LatLng markerLocation = userMarker.getPosition();
+
+        Point screenPosition = projection.toScreenLocation(markerLocation);
+
+        Toast.makeText(this, "Point - " + screenPosition, Toast.LENGTH_LONG).show();*/
     }
+
+
 
     public double roundFourDecimals(double d) {
         DecimalFormat fourDForm = new DecimalFormat("#.####");
@@ -466,114 +489,6 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnMarke
         }
     }
 
-
-
-  /*  public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        String str = (String) adapterView.getItemAtPosition(position);
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-    }
-
-    public static ArrayList<String> autocomplete(String input) {
-        ArrayList<String> resultList = null;
-
-        HttpURLConnection conn = null;
-        StringBuilder jsonResults = new StringBuilder();
-        try {
-            StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
-            sb.append("?key=" + API_KEY);
-            sb.append("&components=country:gr");
-            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
-
-            URL url = new URL(sb.toString());
-
-            System.out.println("URL: "+url);
-            conn = (HttpURLConnection) url.openConnection();
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-
-            // Load the results into a StringBuilder
-            int read;
-            char[] buff = new char[1024];
-            while ((read = in.read(buff)) != -1) {
-                jsonResults.append(buff, 0, read);
-            }
-        } catch (MalformedURLException e) {
-            Log.e(LOG_TAG, "Error processing Places API URL", e);
-            return resultList;
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error connecting to Places API", e);
-            return resultList;
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        try {
-
-            // Create a JSON object hierarchy from the results
-            JSONObject jsonObj = new JSONObject(jsonResults.toString());
-            JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
-
-            // Extract the Place descriptions from the results
-            resultList = new ArrayList<String>(predsJsonArray.length());
-            for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
-                System.out.println("============================================================");
-                resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
-            }
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, "Cannot process JSON results", e);
-        }
-
-        return resultList;
-    }
-
-    class GooglePlacesAutocompleteAdapter extends ArrayAdapter<String> implements Filterable {
-        private ArrayList<String> resultList;
-
-        public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
-        }
-
-        @Override
-        public int getCount() {
-            return resultList.size();
-        }
-
-        @Override
-        public String getItem(int index) {
-            return resultList.get(index);
-        }
-
-        @Override
-        public Filter getFilter() {
-            Filter filter = new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults filterResults = new FilterResults();
-                    if (constraint != null) {
-                        // Retrieve the autocomplete results.
-                        resultList = autocomplete(constraint.toString());
-
-                        // Assign the data to the FilterResults
-                        filterResults.values = resultList;
-                        filterResults.count = resultList.size();
-                    }
-                    return filterResults;
-                }
-
-                @Override
-                protected void publishResults(CharSequence constraint, Filter.FilterResults results) {
-                    if (results != null && results.count > 0) {
-                        notifyDataSetChanged();
-                    } else {
-                        notifyDataSetInvalidated();
-                    }
-                }
-            };
-            return filter;
-        }
-    }*/
 
 
     @Override

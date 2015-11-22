@@ -9,13 +9,14 @@ package com.example.tadhg.iwozere.models;
  */
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.example.tadhg.iwozere.database.LatLngItem;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class Message implements Parcelable {
+public class Message implements Parcelable, Comparable<Message> {
 
     private static final SimpleDateFormat formatter = new SimpleDateFormat(
             "yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -151,4 +152,8 @@ public class Message implements Parcelable {
         }
     };
 
+    @Override
+    public int compareTo(@NonNull Message another) {
+        return getTimestamp().compareTo(another.getTimestamp());
+    }
 }

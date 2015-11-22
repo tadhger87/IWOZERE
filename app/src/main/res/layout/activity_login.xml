@@ -25,7 +25,7 @@
             android:inputType="text"
             android:padding="10dp"
             android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint"
+            android:textColorHint="@color/light_primary_color"
             android:maxLines="1"
             android:singleLine="true"
             android:imeActionId="@+id/edittext_action_login"
@@ -39,11 +39,12 @@
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:hint="@string/prompt_password"
+
             android:inputType="textPassword"
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:textColorHint="@color/light_primary_color" />
 
         <!-- Login Button -->
 
@@ -52,9 +53,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:background="#ff840fa8"
+            android:background="@color/ColorPrimary"
             android:text="@string/btn_login"
-            android:textColor="#fffffdfd" />
+
+            android:textColor="@color/white" />
 
         <!-- Link to Login Screen -->
 
@@ -66,7 +68,7 @@
             android:background="#fffffdfd"
             android:text="@string/btn_link_to_register"
             android:textAllCaps="false"
-            android:textColor="#ff840fa8"
+            android:textColor="@color/ColorPrimary"
             android:shadowColor="#fffffdfd"
             android:textSize="15dp" />
     </LinearLayout>

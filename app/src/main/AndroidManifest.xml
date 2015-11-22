@@ -47,6 +47,11 @@ Theme.AppCompat.Light.NoActionBar
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Main activity -->
@@ -100,7 +105,7 @@ Theme.AppCompat.Light.NoActionBar
             android:label="@string/title_activity_tabs" >
         </activity>
         <activity
-            android:name=".ui.TestTabs"
+            android:name=".ui.LLTabs"
             android:label="@string/title_activity_test" >
         </activity>
         <activity
@@ -108,11 +113,6 @@ Theme.AppCompat.Light.NoActionBar
             android:label="@string/title_activity_welcome"
             >
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
 
         </activity>
@@ -120,19 +120,14 @@ Theme.AppCompat.Light.NoActionBar
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_welcome" >
+
+
         </activity>
         <activity
             android:name=".login.SignUpActivity"
             android:label="@string/title_activity_welcome" >
         </activity>
-        <activity
-            android:name=".login.RegisterActivity"
-            android:label="@string/title_activity_welcome" >
-        </activity>
-        <activity
-            android:name=".login.Login"
-            android:label="@string/title_activity_welcome" >
-        </activity>
+
         <activity
             android:name=".login.SettingsActivity"
             android:label="@string/title_activity_welcome" >
@@ -168,12 +163,7 @@ Theme.AppCompat.Light.NoActionBar
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".maps.TestAppBar"
-            android:label="@string/title_activity_test_app_bar" >
 
-
-        </activity>
     </application>
 
 </manifest>

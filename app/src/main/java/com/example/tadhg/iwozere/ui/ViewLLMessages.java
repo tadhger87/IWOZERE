@@ -1,51 +1,44 @@
 package com.example.tadhg.iwozere.ui;
 
-/**
- *LLMessagesFragment.java
- *Rev 1
- *Date e.g. 24/04/2015
- *@reference http://androidopentutorials.com/android-sqlite-example/EmpListFragment.java
- *@author Tadhg Ó Cuirrn, x14109824
- */
-
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.example.tadhg.iwozere.database.DataBaseHelper2;
-import com.example.tadhg.iwozere.database.MyDatabaseHelper;
-import com.example.tadhg.iwozere.models.Message;
-import com.example.tadhg.iwozere.adapters.MessageListAdapter;
 import com.example.tadhg.iwozere.R;
+import com.example.tadhg.iwozere.adapters.NewMessageAdapter;
 import com.example.tadhg.iwozere.database.MessageDAO;
+import com.example.tadhg.iwozere.models.Message;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
-public class LLMessagesFragment extends Fragment {
-
-    Message message = null;
-    private MessageDAO dbHelper;
-    private SimpleCursorAdapter dataAdapter;
+/**
+ * Created by Tadhg on 28/06/2015.
+ */
+public class ViewLLMessages extends Fragment {
 
     Activity activity;
+    private List<Message> myMessage;
+    private GetMessageTask task;
     ListView messageListView;
+    RecyclerView recView;
     ArrayList<Message> messages;
 
-    MessageListAdapter llMessageListAdapter;
+    NewMessageAdapter messageListAdapter;
     MessageDAO messageDAO;
-
-    private GetMessageTask task;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,30 +46,31 @@ public class LLMessagesFragment extends Fragment {
         activity = getActivity();
         messageDAO = new MessageDAO(activity);
 
-        messageDAO.open();
-    }
 
+
+
+
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ll_messsages_fragment, parent,
-                false);
-        findViewsById(view);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        View v =inflater.inflate(R.layout.view_ll_messages,container,false);
+        recView = (RecyclerView)v.findViewById(R.id.cardList3);
+        recView.setHasFixedSize(true);
+
+        recView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+        recView.setItemAnimator(new DefaultItemAnimator());
+
+        NewMessageAdapter adapter = new NewMessageAdapter(activity, myMessage);
+        recView.setAdapter(adapter);
 
         task = new GetMessageTask(activity);
         task.execute((Void) null);
-
-
-        return view;
-
+//        Collections.sort(messages);
+        return v;
     }
 
-    private void findViewsById(View view) {
-        messageListView = (ListView) view.findViewById(R.id.list_message1);
-    }
-
-
-//WHERE I TRY TO QUERY THE TABLE TO POPULATE THE LIST
 
     public class GetMessageTask extends AsyncTask<Void, Void, ArrayList<Message>> {
 
@@ -87,27 +81,27 @@ public class LLMessagesFragment extends Fragment {
         }
 
         @Override
-        protected ArrayList<Message> doInBackground(Void... arg1) {
+        protected ArrayList<Message> doInBackground(Void... arg0) {
+
             SharedPreferences prefs = getActivity().getSharedPreferences("MyPref", 0);
             String sLat = prefs.getString("currentlatitude", null);
             String sLng = prefs.getString("currentlongitude", null);
+            ArrayList<Message> messageList = messageDAO.getLLMessages(sLat, sLng);
 
-            ArrayList<Message> messageList = messageDAO.getLLMessages(sLat, sLng);    //CALLING THE METHOD HERE
             return messageList;
         }
-
 
         @Override
         protected void onPostExecute(ArrayList<Message> messageList) {
             if (activityWeakRef.get() != null
                     && !activityWeakRef.get().isFinishing()) {
-                //Log.d("messages", messageList.toString());
+                Log.d("messages", messageList.toString());
                 messages = messageList;
                 if (messageList != null) {
                     if (messageList.size() != 0) {
-                        llMessageListAdapter = new MessageListAdapter(getActivity(),
+                        messageListAdapter = new NewMessageAdapter(activity,
                                 messageList);
-                        messageListView.setAdapter(llMessageListAdapter);
+                        recView.setAdapter(messageListAdapter);
                     } else {
                         Toast.makeText(activity, "No Messages",
                                 Toast.LENGTH_LONG).show();
@@ -117,13 +111,5 @@ public class LLMessagesFragment extends Fragment {
             }
         }
     }
-
-
-    public void updateView() {
-        task = new GetMessageTask(activity);
-        task.execute((Void) null);
-    }
-
 }
-
 

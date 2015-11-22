@@ -1,28 +1,23 @@
 package com.example.tadhg.iwozere.ui;
 
 /**
- *MessageAddFragment.java
- *Rev 1
- *Date e.g. 01/04/2015
- *@reference http://androidopentutorials.com/android-sqlite-example/EmpAddFragment.java
- *@author Tadhg Ó Cuirrn, x14109824
+ * Created by Tadhg on 06/06/2015.
  */
-
 import android.app.Activity;
-//import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
-import com.example.tadhg.iwozere.database.MessageDAO;
 import com.example.tadhg.iwozere.R;
+import com.example.tadhg.iwozere.database.MessageDAO;
 import com.example.tadhg.iwozere.models.Message;
 
 import java.lang.ref.WeakReference;
@@ -31,7 +26,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MessageAddFragment extends Fragment implements View.OnClickListener {
+/**
+ * Created by hp1 on 21-01-2015.
+ */
+public class CreateMessage extends Fragment implements View.OnClickListener {
 
     // UI references
     private EditText messageEtxt;
@@ -62,10 +60,8 @@ public class MessageAddFragment extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.create_message, container,
-                false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.create_message,container,false);
 
         SharedPreferences prefs = getActivity().getSharedPreferences("MyPref", 0);
         String sLat = prefs.getString("latitude", null);
@@ -77,7 +73,7 @@ public class MessageAddFragment extends Fragment implements View.OnClickListener
         l1 = Double.parseDouble(sLat);
         l2 = Double.parseDouble(sLng);
 
-        findViewsById(rootView);
+        findViewsById(v);
 
         setListeners();
 
@@ -88,9 +84,7 @@ public class MessageAddFragment extends Fragment implements View.OnClickListener
                 dateCalendar.setTime(new Date(savedInstanceState
                         .getLong("dateCalendar")));
         }
-
-
-        return rootView;
+        return v;
     }
 
     private void setListeners() {
@@ -220,3 +214,5 @@ public class MessageAddFragment extends Fragment implements View.OnClickListener
         }
     }
 }
+
+

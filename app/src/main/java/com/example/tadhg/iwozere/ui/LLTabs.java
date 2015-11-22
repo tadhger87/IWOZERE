@@ -1,33 +1,38 @@
-package com.example.tadhg.iwozere.maps;
+package com.example.tadhg.iwozere.ui;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.example.tadhg.iwozere.R;
+import com.example.tadhg.iwozere.adapters.LLViewPagerAdapter;
 import com.example.tadhg.iwozere.adapters.ViewPagerAdapter;
-import com.example.tadhg.iwozere.ui.SlidingTabLayout;
 
-import android.support.v4.view.ViewPager;
+/**
+ *TestTabs.java
+ *Rev 1
+ *Date e.g. 01/04/2015
+ *@author Tadhg Ó Cuirrn, x14109824
+ */
 
-
-
-public class TestAppBar extends ActionBarActivity {
+public class LLTabs extends ActionBarActivity {
 
     // Declaring Your View and Variables
 
     Toolbar toolbar;
     ViewPager pager;
-    ViewPagerAdapter adapter;
+    LLViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    CharSequence Titles[]={"Home","Events"};
-    int Numboftabs =2;
+    CharSequence Titles[]={"View Messages"};
+    int Numboftabs =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_app_bar);
+        setContentView(R.layout.ll_activity_test);
 
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
@@ -37,14 +42,14 @@ public class TestAppBar extends ActionBarActivity {
 
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+        adapter =  new LLViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
 
         // Assigning ViewPager View and setting the adapter
-        pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.ll_pager);
         pager.setAdapter(adapter);
 
         // Assiging the Sliding Tab Layout View
-        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs = (SlidingTabLayout) findViewById(R.id.ll_tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
 
         // Setting Custom Color for the Scroll bar indicator of the Tab View

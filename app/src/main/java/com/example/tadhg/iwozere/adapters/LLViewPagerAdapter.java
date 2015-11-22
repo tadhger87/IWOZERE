@@ -1,26 +1,23 @@
 package com.example.tadhg.iwozere.adapters;
 
-/**
- * Created by Tadhg on 06/06/2015.
- */
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.tadhg.iwozere.ui.CreateMessage;
 import com.example.tadhg.iwozere.ui.ViewMessages;
+import com.example.tadhg.iwozere.ui.ViewLLMessages;
 
 /**
- * Created by hp1 on 21-01-2015.
+ * Created by Tadhg on 28/06/2015.
  */
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class LLViewPagerAdapter extends FragmentStatePagerAdapter {
 
     CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
     int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
 
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
-    public ViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
+    public LLViewPagerAdapter(FragmentManager fm,CharSequence mTitles[], int mNumbOfTabsumb) {
         super(fm);
 
         this.Titles = mTitles;
@@ -34,8 +31,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if(position == 0) // if the position is 0 we are returning the First tab
         {
-            CreateMessage tab1 = new CreateMessage();
-            return tab1;
+            ViewLLMessages tab3 = new ViewLLMessages();
+            return tab3;
         }
         else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
@@ -60,3 +57,4 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         return NumbOfTabs;
     }
 }
+

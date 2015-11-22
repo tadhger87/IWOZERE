@@ -6,9 +6,9 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".ui.Tab1">
+    tools:context=".ui.Tab3">
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/cardList"
+        android:id="@+id/cardList3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

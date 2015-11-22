@@ -1,100 +1,87 @@
 package com.example.tadhg.iwozere.ui;
 
-/**
-*Tabs.java
-*Rev 1
-*Date e.g. 21/05/2015
- *@author Tadhg Ó Cuirrn, x14109824
- */
-import android.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.example.tadhg.iwozere.R;
-import com.example.tadhg.iwozere.adapters.TabsPagerAdapter;
+import com.example.tadhg.iwozere.adapters.ViewPagerAdapter;
+import com.example.tadhg.iwozere.ui.SlidingTabLayout;
 
-public class Tabs extends FragmentActivity  {
+import android.support.v4.view.ViewPager;
 
 
-    private ViewPager viewPager;
-    private TabsPagerAdapter mAdapter;
-    private ActionBar actionBar;
-    // Tab titles
-    private String[] tabs = {"Create Messages", "View Messages"};
 
-    private MessageListFragment employeeListFragment;
-    private MessageAddFragment employeeAddFragment;
+public class Tabs extends ActionBarActivity {
+
+    // Declaring Your View and Variables
+
+    Toolbar toolbar;
+    ViewPager pager;
+    ViewPagerAdapter adapter;
+    SlidingTabLayout tabs;
+    CharSequence Titles[]={"Create Message","View Messages"};
+    int Numboftabs =2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabs);
+        setContentView(R.layout.activity_test_app_bar);
 
 
+        // Creating The Toolbar and setting it as the Toolbar for the activity
 
-        // Initilization
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        actionBar = getActionBar();
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-        viewPager.setAdapter(mAdapter);
+        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
+        adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
+
+        // Assigning ViewPager View and setting the adapter
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+
+        // Assiging the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.colorAccent);
+            }
+        });
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+
 
 
     }
-
-
-
-
-
 
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tabs, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
-    /*@Override
-    public void onFinishDialog() {
-        if (employeeListFragment != null) {
-            employeeListFragment.updateView();
-        }*/
+
+        return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
-
-
-
-  /* @Override
-    public void sendData(String message) {
-        Fragment vm = getFragmentManager().findFragmentById(R.id.viewM);
-        vm.getData(message);
-    }*/
-
-
-
-
+}

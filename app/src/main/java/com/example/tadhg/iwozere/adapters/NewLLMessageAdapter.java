@@ -12,37 +12,35 @@ import android.widget.TextView;
 
 import com.example.tadhg.iwozere.R;
 import com.example.tadhg.iwozere.models.Message;
-//import com.example.tadhg.iwozere.models.Person;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Tadhg on 17/06/2015.
+ * Created by Tadhg on 28/06/2015.
  */
-public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.MessageViewHolder> {
+public class NewLLMessageAdapter extends RecyclerView.Adapter<NewLLMessageAdapter.LLMessageViewHolder> {
 
-    public static class MessageViewHolder extends RecyclerView.ViewHolder {
+    public static class LLMessageViewHolder extends RecyclerView.ViewHolder {
 
         Message myMessage;
         private Context mContext;
         CardView cv;
-        TextView personName;
-        TextView personAge;
+        TextView messageContent;
+        TextView timestamp;
         ImageView personPhoto;
 
-        MessageViewHolder(View itemView) {
+        LLMessageViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            personName = (TextView)itemView.findViewById(R.id.person_name);
-            personAge = (TextView)itemView.findViewById(R.id.person_age);
+            cv = (CardView)itemView.findViewById(R.id.ll_cv);
+            messageContent = (TextView)itemView.findViewById(R.id.ll_message_content);
+            timestamp = (TextView)itemView.findViewById(R.id.ll_timestamp);
             personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
         }
     }
 
     List<Message> myMessage;
 
-    public NewMessageAdapter(Activity activity, List<Message> myMessage){
+    public NewLLMessageAdapter(Activity activity, List<Message> myMessage){
         this.myMessage = myMessage;
     }
 
@@ -52,21 +50,25 @@ public class NewMessageAdapter extends RecyclerView.Adapter<NewMessageAdapter.Me
     }
 
     @Override
-    public MessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_card, null);
+    public LLMessageViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ll_item_card, null);
 
         RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, //width
                 ViewGroup.LayoutParams.WRAP_CONTENT);//height
         v.setLayoutParams(lp);//override default layout params
-        MessageViewHolder mvh = new MessageViewHolder(v);
+        LLMessageViewHolder mvh = new LLMessageViewHolder(v);
         return mvh;
     }
 
+
+
+
+
     @Override
-    public void onBindViewHolder(MessageViewHolder messageViewHolder, int i) {
-        messageViewHolder.personName.setText(myMessage.get(i).getMessage());
-        messageViewHolder.personAge.setText(myMessage.get(i).getTimestamp());
+    public void onBindViewHolder(LLMessageViewHolder messageViewHolder, int i) {
+        messageViewHolder.messageContent.setText(myMessage.get(i).getMessage());
+        messageViewHolder.timestamp.setText(myMessage.get(i).getTimestamp());
         //personViewHolder.personPhoto.setImageResource(persons.get(i).photoId);
 
     }
